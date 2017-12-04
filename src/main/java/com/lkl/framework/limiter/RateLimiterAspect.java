@@ -196,6 +196,7 @@ public class RateLimiterAspect implements EnvironmentAware {
                 } else {
                     rateLimiter = RateLimiter.create(rate);
                 }
+                //rateLimiters是并发map，当向其中 set 值时，可能已经被修改了。
                 RateLimiter oldRateLimiter = rateLimiters.putIfAbsent(name.get(), rateLimiter);
                 if (oldRateLimiter != null) {
                     rateLimiter = oldRateLimiter;
